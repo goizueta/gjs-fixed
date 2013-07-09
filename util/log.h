@@ -94,7 +94,7 @@ typedef enum {
 /* Whether to log all gobject-introspection types and methods we use
  */
 #ifndef GJS_VERBOSE_ENABLE_GI_USAGE
-#define GJS_VERBOSE_ENABLE_GI_USAGE 0
+#define GJS_VERBOSE_ENABLE_GI_USAGE 1
 #endif
 
 /* Whether to log all callback GClosure debugging (finalizing, invalidating etc)

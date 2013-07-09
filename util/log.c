@@ -88,8 +88,8 @@ gjs_debug(GjsDebugTopic topic,
           const char   *format,
           ...)
 {
-    static FILE *logfp = NULL;
-    static gboolean debug_log_enabled = FALSE;
+    FILE *logfp = stderr;
+    static gboolean debug_log_enabled = TRUE;
     static gboolean strace_timestamps = FALSE;
     static gboolean checked_for_timestamp = FALSE;
     static gboolean print_timestamp = FALSE;
@@ -243,8 +243,8 @@ gjs_debug(GjsDebugTopic topic,
         break;
     }
 
-    if (!is_allowed_prefix(prefix))
-        return;
+    //if (!is_allowed_prefix(prefix))
+    //    return;
 
     va_start (args, format);
     s = g_strdup_vprintf (format, args);

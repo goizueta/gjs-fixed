@@ -52,9 +52,9 @@ char*       gjs_camel_from_hyphen               (const char     *hyphen_name);
 char*       gjs_hyphen_from_camel               (const char     *camel_name);
 
 
-#if GJS_VERBOSE_ENABLE_GI_USAGE
+//#if GJS_VERBOSE_ENABLE_GI_USAGE
 void _gjs_log_info_usage(GIBaseInfo *info);
-#endif
+//#endif
 
 G_END_DECLS
 

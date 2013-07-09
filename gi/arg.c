@@ -2067,6 +2067,15 @@ gjs_array_from_carray_internal (JSContext  *context,
               JSPROP_ENUMERATE)) \
           goto finally; \
     }
+#define ITERATE_POINTERTYPE() \
+    for (i = 0; i < length; i++) { \
+        arg.v_pointer = ((char *)(array)) + i;                         \
+        if (!gjs_value_from_g_argument(context, &elem, param_info, &arg, TRUE)) \
+          goto finally; \
+        if (!JS_DefineElement(context, obj, i, elem, NULL, NULL, \
+              JSPROP_ENUMERATE)) \
+          goto finally; \
+    }
 
     switch (element_type) {
         case GI_TYPE_TAG_UINT8:
@@ -2108,7 +2117,7 @@ gjs_array_from_carray_internal (JSContext  *context,
         case GI_TYPE_TAG_GSLIST:
         case GI_TYPE_TAG_GHASH:
         case GI_TYPE_TAG_ERROR:
-          ITERATE(pointer);
+          ITERATE_POINTERTYPE();
           break;
         default:
           gjs_throw(context, "Unknown Array element-type %d", element_type);
@@ -3329,7 +3338,7 @@ gjs_g_argument_release_out_array (JSContext  *context,
     if (transfer != GI_TRANSFER_CONTAINER &&
         type_needs_out_release(param_type, type_tag)) {
         for (i = 0; i < length; i++) {
-            elem.v_pointer = array[i];
+            elem.v_pointer = &array[i];
             if (!gjs_g_arg_release_internal(context,
                                             GI_TRANSFER_EVERYTHING,
                                             param_type,
